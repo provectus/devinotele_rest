@@ -31,7 +31,7 @@ module DevinoteleRest
 
         raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
       rescue Faraday::Error::TimeoutError => e
-        raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
+        raise DevinoteleRest::RequestError, e.message
       end
     end
   end
