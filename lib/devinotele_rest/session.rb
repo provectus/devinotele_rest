@@ -10,9 +10,13 @@ module DevinoteleRest
 
     def get_session
       res = @conn.get URL, { login: @login, password: @password }
-      return res.body.slice(1..36) if res.success?
-
-      raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
+      if res.success?
+        res.body.slice(1..36)
+      else
+        raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
+      end
+    rescue Faraday::Error::TimeoutError => e
+      raise DevinoteleRest::RequestError, e.message
     end
   end
 end

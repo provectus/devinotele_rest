@@ -3,15 +3,15 @@ require 'spec_helper'
 describe DevinoteleRest::Session do
   let(:login) { double() }
   let(:password) { double() }
-  let(:connection) { double() }
 
   it 'responds to get_session' do
-    session_r = DevinoteleRest::Session.new(login, password, connection)
+    session_r = DevinoteleRest::Session.new(login, password, double())
     expect(session_r).to respond_to :get_session
   end
 
   context 'when login or password incorrect' do
-    let(:error_response) { double() }
+    let(:error_response) { double('error_response') }
+    let(:connection) { double() }
 
     before do
       error_response.should_receive(:success?).and_return(false)
@@ -27,8 +27,9 @@ describe DevinoteleRest::Session do
   end
 
   context 'when login and password correct' do
-    let(:success_response) { double() }
+    let(:success_response) { double('success_response') }
     let(:session_token) { SecureRandom.uuid }
+    let(:connection) { double() }
 
     before do
       success_response.should_receive(:success?).twice.and_return(true)

@@ -30,6 +30,8 @@ module DevinoteleRest
         return true if res.success?
 
         raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
+      rescue Faraday::Error::TimeoutError => e
+        raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
       end
     end
   end
