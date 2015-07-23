@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 module DevinoteleRest
   class Session
     URL = '/rest/user/sessionid?'
@@ -12,9 +10,9 @@ module DevinoteleRest
 
     def get_session
       res = @conn.get URL, { login: @login, password: @password }
-      return res.body if res.success?
+      return res.body.slice(1..36) if res.success?
 
-      raise DevinoteleRest::RequestError, res.body
+      raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
     end
   end
 end

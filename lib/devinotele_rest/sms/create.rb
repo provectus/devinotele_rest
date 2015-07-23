@@ -13,23 +13,23 @@ module DevinoteleRest
       end
 
       def initialize(options)
-        @from = options.fetch(:from)
-        @to = options.fetch(:to)
-        @body = options.fetch(:body)
+        @options = options
       end
 
       def create(conn, session)
         res = conn.post do |req|
           req.url URL
           req.body = {
-            SessionID: eval(session),
-            SourceAddress: @from,
-            DestinationAddress: @to,
-            Data: @body
+            SessionID: session,
+            SourceAddress: @options.fetch(:from),
+            DestinationAddress: @options.fetch(:to),
+            Data: @options.fetch(:body)
           }
         end
 
-        raise DevinoteleRest::RequestError, res.body unless res.success?
+        return true if res.success?
+
+        raise DevinoteleRest::RequestError, JSON.parse(res.body)['Desc']
       end
     end
   end

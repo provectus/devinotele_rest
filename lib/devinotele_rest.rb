@@ -1,5 +1,7 @@
 require 'faraday'
 require "devinotele_rest/version"
+require 'json'
+require 'devinotele_rest/common_error'
 require 'devinotele_rest/session'
 require 'devinotele_rest/connection'
 require 'devinotele_rest/sms'
