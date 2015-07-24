@@ -28,20 +28,34 @@ describe DevinoteleRest::Session do
 
   context 'when login and password correct' do
     let(:success_response) { double('success_response') }
-    let(:session_token) { SecureRandom.uuid }
+    let(:session) { { token: SecureRandom.uuid, created_at: Time.now } }
     let(:connection) { double() }
 
     before do
       success_response.should_receive(:success?).twice.and_return(true)
-      success_response.should_receive(:body).twice.and_return("\"#{session_token}\"")
+      success_response.should_receive(:body).twice.and_return("\"#{session[:token]}\"")
 
       connection.should_receive(:get).twice.and_return(success_response)
     end
 
     it 'returns session token' do
       session_r = DevinoteleRest::Session.new('right_login', 'right_password', connection)
-      expect(session_r.get_session).to eql(session_token)
+      expect(session_r.get_session.fetch(:token)).to eql(session.fetch(:token))
       expect{session_r.get_session}.not_to raise_error
+    end
+  end
+
+  describe 'session validation' do
+    it 'returns session valid status' do
+      valid_session = { token: SecureRandom.uuid, created_at: Time.now }
+      session_r = DevinoteleRest::Session.new('right_login', 'right_password', double())
+      expect(session_r.valid_session?(valid_session)).to eql(true)
+    end
+
+    it 'returns session invalid status' do
+      invalid_session = { token: SecureRandom.uuid, created_at: Time.now - 180 * 60 }
+      session_r = DevinoteleRest::Session.new('right_login', 'right_password', double())
+      expect(session_r.valid_session?(invalid_session)).to eql(false)
     end
   end
 end
