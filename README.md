@@ -1,8 +1,6 @@
 # DevinoteleRest
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/devinotele_rest`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to devinotele_rest. This gem designed for usage with sms sender http://www.devinotele.com/ and their REST API.
 
 ## Installation
 
@@ -21,8 +19,16 @@ Or install it yourself as:
     $ gem install devinotele_rest
 
 ## Usage
+Initialize DevianteleRest::Client with deviantele's login and password.
+```ruby
+client = DevianteleRest::Client.new(login, password)
+```
 
-TODO: Write usage instructions here
+Send sms
+```ruby
+client.create(to: 'RECIPIENT_NUMBER', from: 'YOUR_NUMBER', body: 'SMS TEXT')
+```
+Also you may handle errors from Deviantele by rescue DevianteleRest::RequestError
 
 ## Development
 
@@ -38,4 +44,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
