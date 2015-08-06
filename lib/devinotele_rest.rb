@@ -20,7 +20,7 @@ module DevinoteleRest
 
     def create(options)
       @session = get_session
-      DevinoteleRest::Sms::Create.create(options, conn, @session.fetch(:token))
+      DevinoteleRest::Sms::Create.create(options, @conn, @session.fetch(:token))
     end
 
     private
