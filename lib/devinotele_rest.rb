@@ -25,7 +25,7 @@ module DevinoteleRest
 
     private
     def get_session
-      @session_requester = DevinoteleRest::Session.new(login, password, conn)
+      @session_requester = DevinoteleRest::Session.new(@login, @password, @conn)
       if @session && @session_requester.valid_session?(@session)
         @session
       else
