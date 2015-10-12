@@ -19,16 +19,16 @@ Or install it yourself as:
     $ gem install devinotele_rest
 
 ## Usage
-Initialize DevianteleRest::Client with deviantele's login and password.
+Initialize DevinoteleRest::Client with devinotele's login and password.
 ```ruby
-client = DevianteleRest::Client.new(login, password)
+client = DevinoteleRest::Client.new(login, password)
 ```
 
 Send sms
 ```ruby
 client.create(to: 'RECIPIENT_NUMBER', from: 'YOUR_NUMBER', body: 'SMS TEXT')
 ```
-Also you may handle errors from Deviantele by rescue DevianteleRest::RequestError
+Also you may handle errors from Devinotele by rescue DevinoteleRest::RequestError
 
 ## Development
 
