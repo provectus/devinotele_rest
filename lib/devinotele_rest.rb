@@ -1,36 +1,18 @@
 require 'faraday'
-require "devinotele_rest/version"
 require 'json'
-require 'devinotele_rest/common_error'
-require 'devinotele_rest/session'
-require 'devinotele_rest/connection'
-require 'devinotele_rest/sms'
+
+require "devinotele_rest/version"
 
 module DevinoteleRest
   BASE_REST_URL = 'https://integrationapi.net'
 
-  attr_reader :conn, :login, :password
+  autoload :CommonError, "devinotele_rest/errors"
+  autoload :RequestError, "devinotele_rest/errors"
 
-  class Client
-    def initialize(login, password)
-      @login = login
-      @password = password
-      @conn = DevinoteleRest::Connection.create
-    end
+  autoload :Connection, "devinotele_rest/connection"
+  autoload :Session, "devinotele_rest/session"
 
-    def create(options)
-      @session = get_session
-      DevinoteleRest::Sms::Create.create(options, @conn, @session.fetch(:token))
-    end
-
-    private
-    def get_session
-      @session_requester = DevinoteleRest::Session.new(@login, @password, @conn)
-      if @session && @session_requester.valid_session?(@session)
-        @session
-      else
-        @session_requester.get_session
-      end
-    end
-  end
+  autoload :Sms, "devinotele_rest/sms"
+  autoload :MultipleSms, "devinotele_rest/multiple_sms"
+  autoload :Client, "devinotele_rest/client"
 end

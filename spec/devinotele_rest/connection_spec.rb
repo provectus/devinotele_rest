@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe DevinoteleRest::Connection do
-  subject() { DevinoteleRest::Connection }
 
-  it 'respond to create method' do
-    expect(subject).to respond_to :create
+  it 'respond to get method' do
+    expect(subject).to respond_to :get
+  end
+
+  it 'respond to post method' do
+    expect(subject).to respond_to :post
   end
 end
