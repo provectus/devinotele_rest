@@ -19,7 +19,7 @@ module DevinoteleRest
     private
 
     def send(params)
-      DevinoteleRest::Sms.create(params, connection, session.session_id))
+      DevinoteleRest::Sms.create(params, connection, session.session_id)
     end
 
     def multiple_send(params)
